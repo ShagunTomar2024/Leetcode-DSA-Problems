@@ -1,0 +1,26 @@
+class Solution {
+    public int[] vowelStrings(String[] words, int[][] queries) {
+        String s="aeiou";
+        int n=queries.length;
+        int[] ans=new int[n];
+        int[] arr=new int[words.length];
+        int[] prefix=new int[words.length];
+        for(int i=0;i<words.length;i++){
+            String ss=words[i];
+            if(s.indexOf(ss.charAt(0))!=-1&&s.indexOf(ss.charAt(ss.length()-1))!=-1){
+                arr[i]=1;
+            }else{
+                arr[i]=0;
+            }
+        }
+        prefix[0]=arr[0];
+        for(int i=1;i<words.length;i++){
+             prefix[i]=prefix[i-1]+arr[i];
+        }for(int i=0;i<queries.length;i++){
+            int l=queries[i][0];
+            int r=queries[i][1];
+            ans[i]=(prefix[r]-prefix[l])+arr[l];
+        }
+        return ans;
+    }
+}
